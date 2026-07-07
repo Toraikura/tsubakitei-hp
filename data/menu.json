@@ -208,7 +208,17 @@
             {
               "name": "揚げ茄子のオードブル 〜茄子の素揚げ〜",
               "description": "",
-              "image": "assets/img/menu/9cfb46_b387c50e6bac4811a98f08e182972bba.jpg"
+              "image": "assets/img/menu/9cfb46_b387c50e6bac4811a98f08e182972bba.jpg",
+              "variants": [
+                {
+                  "name": "S",
+                  "price": 650
+                },
+                {
+                  "name": "L",
+                  "price": 750
+                }
+              ]
             },
             {
               "name": "あさりとズッキーニの白ワインスパイス蒸し",
@@ -351,11 +361,6 @@
             {
               "name": "アルコール",
               "description": "・サッポロ生ビール\n・樽生スパークリングワイン\n・グラスワイン 赤/白\n・Deward’s (ウイスキー)\n・Deward’s ハイボール/コーク/ジンジャーエール\n・サッポロ焼酎\n・レモンサワー\n・グレープフルーツサワー",
-              "price": 0
-            },
-            {
-              "name": "リキュール",
-              "description": "・カシス\n・カンパリ\n・ウォッカ\n・ラム\n・ウイスキー",
               "price": 0
             },
             {

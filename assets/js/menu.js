@@ -56,7 +56,7 @@
     bodyEl.innerHTML = html;
   }
 
-  fetch(DATA_URL)
+  fetch(DATA_URL, { cache: "no-cache" })
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var menus = data.menus;

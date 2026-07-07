@@ -1,0 +1,25 @@
+{
+  "store": "deli",
+  "items": [
+    { "visible": true, "sortOrder": 10, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 20, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 30, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 40, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 50, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 60, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 70, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 80, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 90, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 100, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 110, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 120, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 130, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 140, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 150, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 160, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 170, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 180, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 190, "name": "coming soon...", "priceText": "￥...", "imagePath": "" },
+    { "visible": true, "sortOrder": 200, "name": "coming soon...", "priceText": "￥...", "imagePath": "" }
+  ]
+}

@@ -1,10 +1,12 @@
 /* メニュー描画
- * Phase 1: ../data/menu.json から読み込み
- * Phase 2: microCMS導入時は DATA_URL をmicroCMSのAPIに切り替える
+ * microCMS設定がある場合はCMSを正本にする。
+ * 未設定/取得失敗時は ../data/menu.json にfallbackする。
  */
 (function () {
-  var DATA_URL = "../data/menu.json";
+  var LOCAL_DATA_URL = "../data/menu.json";
   var LABELS = { "menu": "Lunch", "dinner-menu": "Dinner", "course-menu": "Course" };
+  var MENU_ORDER = ["menu", "dinner-menu", "course-menu"];
+  var CMS_CONFIG = window.TSUBAKITEI_MENU_CMS || {};
 
   var tabsEl = document.getElementById("menu-tabs");
   var leadEl = document.getElementById("menu-lead");
@@ -20,7 +22,14 @@
     return d.innerHTML;
   }
 
+  function imageSrc(src) {
+    if (!src) return "";
+    if (/^(https?:)?\/\//.test(src) || src.charAt(0) === "/") return src;
+    return "../" + src;
+  }
+
   function priceHtml(item) {
+    if (item.priceText) return esc(item.priceText);
     if (item.variants && item.variants.length) {
       return item.variants
         .map(function (v) { return "<small>" + esc(v.name) + "</small> " + yen(v.price); })
@@ -41,7 +50,7 @@
         html += '<div class="menu-items">';
         sec.items.forEach(function (item) {
           html += '<div class="menu-item">';
-          if (item.image) html += '<img class="thumb" src="../' + esc(item.image) + '" alt="' + esc(item.name) + '" loading="lazy">';
+          if (item.image) html += '<img class="thumb" src="' + esc(imageSrc(item.image)) + '" alt="' + esc(item.name) + '" loading="lazy">';
           html += '<div class="body"><div class="name">' + esc(item.name) + "</div>";
           if (item.description) html += '<div class="desc">' + esc(item.description) + "</div>";
           html += "</div>";
@@ -56,23 +65,115 @@
     bodyEl.innerHTML = html;
   }
 
-  fetch(DATA_URL, { cache: "no-cache" })
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      var menus = data.menus;
-      menus.forEach(function (menu, i) {
-        var btn = document.createElement("button");
-        btn.className = "menu-tab" + (i === 0 ? " active" : "");
-        btn.textContent = LABELS[menu.id] || menu.name;
-        btn.addEventListener("click", function () {
-          tabsEl.querySelectorAll(".menu-tab").forEach(function (b) { b.classList.remove("active"); });
-          btn.classList.add("active");
-          render(menu);
-        });
-        tabsEl.appendChild(btn);
+  function fetchJson(url, options) {
+    return fetch(url, options || {}).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  }
+
+  function normalizeMenuId(value) {
+    var v = String(value || "").trim();
+    if (v === "Lunch" || v === "lunch") return "menu";
+    if (v === "Dinner" || v === "dinner") return "dinner-menu";
+    if (v === "Course" || v === "course") return "course-menu";
+    return v || "menu";
+  }
+
+  function getImageUrl(image) {
+    if (!image) return "";
+    if (typeof image === "string") return image;
+    return image.url || "";
+  }
+
+  function numberOrNull(value) {
+    if (value === null || value === undefined || value === "") return null;
+    var n = Number(value);
+    return isNaN(n) ? null : n;
+  }
+
+  function sortByOrder(a, b) {
+    return (numberOrNull(a.sortOrder) || 0) - (numberOrNull(b.sortOrder) || 0);
+  }
+
+  function microCmsToMenus(data) {
+    var menusById = {};
+    MENU_ORDER.forEach(function (id) {
+      menusById[id] = { id: id, name: LABELS[id], description: "", sections: [] };
+    });
+
+    (data.contents || []).filter(function (row) {
+      return row.visible !== false && (!row.store || row.store === "tsubakitei");
+    }).sort(sortByOrder).forEach(function (row) {
+      var menuId = normalizeMenuId(row.menuId || row.menu);
+      var menu = menusById[menuId] || (menusById[menuId] = {
+        id: menuId,
+        name: row.menuLabel || LABELS[menuId] || menuId,
+        description: "",
+        sections: []
       });
-      if (menus.length) render(menus[0]);
-    })
+      if (!menu.description && row.menuDescription) menu.description = row.menuDescription;
+
+      var sectionName = row.sectionName || "その他";
+      var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
+      if (!section) {
+        section = { name: sectionName, description: row.sectionDescription || "", items: [] };
+        menu.sections.push(section);
+      }
+      if (!section.description && row.sectionDescription) section.description = row.sectionDescription;
+
+      section.items.push({
+        name: row.name || "",
+        description: row.description || "",
+        price: numberOrNull(row.price),
+        priceText: row.priceText || "",
+        image: getImageUrl(row.image) || row.imagePath || "",
+        sortOrder: row.sortOrder
+      });
+    });
+
+    return {
+      menus: MENU_ORDER.map(function (id) { return menusById[id]; })
+        .filter(function (menu) { return menu.sections.length; })
+    };
+  }
+
+  function microCmsUrl() {
+    var queries = CMS_CONFIG.queries || "limit=100&orders=sortOrder";
+    return "https://" + CMS_CONFIG.serviceDomain + ".microcms.io/api/v1/" + CMS_CONFIG.endpoint + "?" + queries;
+  }
+
+  function loadMenuData() {
+    if (CMS_CONFIG.enabled && CMS_CONFIG.serviceDomain && CMS_CONFIG.endpoint && CMS_CONFIG.apiKey) {
+      return fetchJson(microCmsUrl(), {
+        cache: "no-cache",
+        headers: { "X-MICROCMS-API-KEY": CMS_CONFIG.apiKey }
+      }).then(microCmsToMenus).catch(function (e) {
+        console.warn("microCMS menu load failed. Fallback to local JSON.", e);
+        return fetchJson(LOCAL_DATA_URL, { cache: "no-cache" });
+      });
+    }
+    return fetchJson(LOCAL_DATA_URL, { cache: "no-cache" });
+  }
+
+  function renderTabs(menus) {
+    tabsEl.innerHTML = "";
+    menus.forEach(function (menu, i) {
+      var btn = document.createElement("button");
+      btn.className = "menu-tab" + (i === 0 ? " active" : "");
+      btn.textContent = LABELS[menu.id] || menu.name;
+      btn.addEventListener("click", function () {
+        tabsEl.querySelectorAll(".menu-tab").forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        render(menu);
+      });
+      tabsEl.appendChild(btn);
+    });
+    if (menus.length) render(menus[0]);
+  }
+
+  loadMenuData()
+    .then(function (data) { renderTabs(data.menus || []); })
     .catch(function (e) {
       bodyEl.innerHTML = '<p style="text-align:center">メニューを読み込めませんでした。お手数ですが再読み込みしてください。</p>';
       console.error(e);

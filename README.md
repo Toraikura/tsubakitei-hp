@@ -6,7 +6,7 @@
 
 - **静的HTML/CSS/JS**（ビルド不要・フレームワークなし）
 - ホスティング: GitHub Pages
-- メニューデータ: `data/menu.json`（Phase 2でmicroCMSに切替予定 → `assets/js/menu.js` の `DATA_URL` を変更するだけ）
+- メニューデータ: `data/menu.json`（fallback） / microCMS Hobby（Phase 2正本）
 
 ## ディレクトリ
 
@@ -30,7 +30,10 @@ docs/             設計書
 
 - **2号店（/deli/）の公開手順**: ① `index.html` の2枚目のComing soonカードを `<a class="store-card" href="deli/">` に差し替え ② `deli/index.html` から `<meta name="robots" content="noindex, nofollow">` を削除
 - 3号店追加時は `/店舗名/` ディレクトリを同パターンで追加
-- メニュー変更は `data/menu.json` を編集（microCMS移行後は店主がスマホで編集）
+- メニュー変更は `data/menu.json` を編集。microCMS移行後は店主がスマホで価格・写真を編集
+- microCMS設定は `assets/js/menu-config.js`。手順は `docs/microcms-menu-hobby-setup.md`
+- microCMS初回投入CSV生成: `node scripts/build-microcms-menu-import.mjs`
+- ツバキ&デリのメニュー枠は `data/deli-menu.json` に20件用意。microCMSでは `store: deli` + `表示する` で出し分け
 - ローカル確認: `python3 -m http.server 8000` → http://localhost:8000
 
 ## ドメイン切替（未実施）

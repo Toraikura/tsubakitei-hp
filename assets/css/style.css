@@ -19,6 +19,8 @@
 
 html { scroll-behavior: smooth; }
 
+#deli-menu, #deli-access { scroll-margin-top: 92px; }
+
 body {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
   background: var(--cream);
@@ -372,6 +374,73 @@ a.store-card:hover { transform: translateY(-4px); }
 @media (max-width: 640px) {
   .menu-item { padding: 12px 14px; gap: 12px; }
   .menu-item .thumb { width: 60px; height: 60px; }
+}
+
+/* ---------- デリ メニュー ---------- */
+.deli-menu-block { padding: 24px 28px; }
+.deli-menu-block h3 { margin-bottom: 22px; }
+.deli-menu-list { display: grid; gap: 16px; }
+.deli-menu-item {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  min-height: 108px;
+  padding: 16px 22px;
+}
+.deli-thumb {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+}
+.deli-thumb-img, .deli-thumb-empty {
+  width: 78px;
+  height: 78px;
+  border-radius: 14px;
+}
+.deli-thumb-img { object-fit: cover; }
+.deli-thumb-empty {
+  border: 2px solid var(--ink);
+  background: var(--white);
+}
+.deli-name {
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.deli-desc {
+  margin-top: 2px;
+  font-size: .84rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  white-space: pre-line;
+}
+.deli-price {
+  min-width: 72px;
+  text-align: right;
+  font-weight: 900;
+  color: var(--red-dark);
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .deli-menu-block { padding: 22px 14px; }
+  .deli-menu-item {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    gap: 12px;
+    min-height: 86px;
+    padding: 12px;
+  }
+  .deli-thumb, .deli-thumb-img, .deli-thumb-empty {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+  }
+  .deli-price { min-width: 54px; font-size: .98rem; }
 }
 
 /* ---------- ギャラリー ---------- */

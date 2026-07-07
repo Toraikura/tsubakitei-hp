@@ -1,0 +1,127 @@
+visible,store,menuId,sectionName,sectionDescription,sortOrder,name,description,price,priceText,imagePath,image
+TRUE,tsubakitei,menu,ランチメニュー,"※税込み価格表示
+この他にも、季節の食材を使った『日替わりの季節メニュー』がございます。",10,A. ハンバーグステーキ,,1200,,assets/img/menu/9cfb46_c7c1cad32b2346c7984056ec038a60d3.png,
+TRUE,tsubakitei,menu,ランチメニュー,"※税込み価格表示
+この他にも、季節の食材を使った『日替わりの季節メニュー』がございます。",20,B. 豚肉の生姜焼き,,1200,,assets/img/menu/9cfb46_e69d275898444c7993fc8171bfff4dc8.png,
+TRUE,tsubakitei,menu,ランチメニュー,"※税込み価格表示
+この他にも、季節の食材を使った『日替わりの季節メニュー』がございます。",30,C. 白身魚フライ,,1200,,assets/img/menu/9cfb46_2b5cb4610bce45febc3487d0c2ae2b46.png,
+TRUE,tsubakitei,menu,ランチメニュー,"※税込み価格表示
+この他にも、季節の食材を使った『日替わりの季節メニュー』がございます。",40,D. エビフライ,※限定10食,1200,,assets/img/menu/9cfb46_11ac4bbe422a49a4822c5633de73912e.png,
+TRUE,tsubakitei,menu,ランチメニュー,"※税込み価格表示
+この他にも、季節の食材を使った『日替わりの季節メニュー』がございます。",50,E. ミックスフライ（エビ、白身魚、ホタテ）,※限定10食,1200,,assets/img/menu/9cfb46_442a30d01ccf4b5f938880101f5126a6.jpg,
+TRUE,tsubakitei,menu,単品,,60,洋食屋のポテトサラダ,,580,,,
+TRUE,tsubakitei,menu,単品,,70,冷製ラタトゥイユ,,580,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,80,そば茶,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,90,ウーロン茶,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,100,ジャスミン茶,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,110,紅茶(アイス・ホット),,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,120,アイスコーヒー,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,130,竹炭コーヒー, (竹の炭で焙煎された豆です),200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,140,オレンジジュース,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,150,グレープフルーツジュース,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,160,アップルジュース,,200,,,
+TRUE,tsubakitei,menu,ソフトドリンク,,170,トマトジュース,,200,,,
+TRUE,tsubakitei,menu,アルコール,,180,ランチビール,,300,,,
+TRUE,tsubakitei,menu,アルコール,,190,ワイングラス (赤・白),,300,,,
+TRUE,tsubakitei,menu,アルコール,,200,サッポロビール,,500,,,
+TRUE,tsubakitei,menu,アルコール,,210,スパークリングワイン,,300,,,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,220,ミニ冷製ラタトゥイユ,,300,,assets/img/menu/9cfb46_a859bf3155a9409cb6f107c9525afc3f.png,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,230,ミニ洋食屋のポテトサラダ,,300,,assets/img/menu/9cfb46_a859bf3155a9409cb6f107c9525afc3f.png,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,240,マサラピスタチオ 〜数種類のスパイスで合わせました〜,,400,,assets/img/menu/9cfb46_0218b3089e2a44f1af738d97fa1fc39b.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,250,冷製ラタトゥイユ 〜新鮮野菜のトマト煮込み〜,,580,,assets/img/menu/9cfb46_5f79e04089934948885802fd1be95cb8.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,260,洋食屋のポテトサラダ 〜自家製マヨネーズで合わせました〜,,580,,assets/img/menu/9cfb46_095625a363d34073805195796d42867d.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,270,アボカドの醤油漬け,,480,,assets/img/menu/9cfb46_959a9223e4a7453eb23a071936646add.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,280,百合の花のつぼみのアンチョビガーリックソテー,,580,,assets/img/menu/9cfb46_846c62a97d8f469fae99c9d7b57227d7.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,290,カマンベールチーズフライ,,580,,assets/img/menu/9cfb46_35dde5825df840838543d5952d4fe81c.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,300,フライドポテト 〜2種のソースで〜,,690,,assets/img/menu/9cfb46_20cccea0a59a4b8590265f775d091f99.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,310,揚げ茄子のオードブル 〜茄子の素揚げ〜,,,S ￥650 / L ￥750,assets/img/menu/9cfb46_b387c50e6bac4811a98f08e182972bba.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,320,あさりとズッキーニの白ワインスパイス蒸し,,750,,assets/img/menu/9cfb46_7af2905f0a1c437e93007801fba77145.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,330,グリーンサラダ 〜自家製野菜生ドレッシングで〜,,650,,assets/img/menu/9cfb46_1a98a12b15bd4ccf9e04300127a292cb.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,340,ハンバーグステーキ 伝説継承 〜特製ツバキソース〜,,1080,,assets/img/menu/9cfb46_c7c1cad32b2346c7984056ec038a60d3.png,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,350,赤身ビーフステーキ,,1790,,assets/img/menu/9cfb46_28ff7344eee341b3b48daa8984c98bd8.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,360,豚肉の生姜焼き,,980,,assets/img/menu/9cfb46_e69d275898444c7993fc8171bfff4dc8.png,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,370,白身魚フライ,,1100,,assets/img/menu/9cfb46_7a92dd37b1044be7aaaccb1e77bb11da.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,380,エビフライ,,1200,,assets/img/menu/9cfb46_501d7c00d3624365ad4d76715052eeae.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,390,ガーリックチキン 〜しめじとベーコンの和風ソースで〜,,1280,,assets/img/menu/9cfb46_f4e6c48e4bb147d29095fa38f37e294f.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,400,豚ロースのカツレツ 〜デミグラスソースとグリュエールチーズで〜,,1200,,assets/img/menu/9cfb46_dfab24c169874265a77cf1b3b176635b.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,410,アッシュパルマンティエ 〜牛挽肉とマッシュポテトのグラタン〜,,850,,assets/img/menu/9cfb46_31aae05f7ef54d26b6b4493b5e572010.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,420,昔ながらのスパゲッティナポリタン,,990,,assets/img/menu/9cfb46_6b95a3533b1146b39aae381730e08f89.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,430,オムライス 〜特製デミグラスソースで〜,,1100,,assets/img/menu/9cfb46_b37f090701ea415dbd09890d3d584dd0.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,440,牛すじピラフ 温玉のせ,,980,,assets/img/menu/9cfb46_48296b798c894fbcaa2d10108ee1fc0d.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,450,ハンバーグ&生姜焼き MIX,,1650,,assets/img/menu/9cfb46_4f8afb877a49466c968c417d58fef8a3.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,460,MIXフライ,,1450,,assets/img/menu/9cfb46_08a8b4ed779c428d9aba6a3d17020581.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,470,ライス・味噌汁セット,,300,,assets/img/menu/9cfb46_fbeb302f4ee7484e9dc29377c9029845.jpg,
+TRUE,tsubakitei,dinner-menu,ディナーメニュー,,480,カリカリバケット,,250,,assets/img/menu/9cfb46_44828bdd79774fd4b0db2fe8a8668f7e.jpg,
+TRUE,tsubakitei,dinner-menu,デザートメニュー,,490,バニラビーンズアイス,,500,,assets/img/menu/9cfb46_898dfd5d0b7943ad8be617f99bc579e8.jpg,
+TRUE,tsubakitei,dinner-menu,デザートメニュー,,500,チョコレートアイス,,500,,assets/img/menu/9cfb46_135b261b813e493c9d551260af876a4a.jpg,
+TRUE,tsubakitei,dinner-menu,デザートメニュー,,510,100% 赤葡萄シャーベット,,500,,assets/img/menu/9cfb46_978beff2528d43b4895606fc8fae0ccb.jpg,
+TRUE,tsubakitei,dinner-menu,デザートメニュー,,520,自家製ティラミス 〜マスカルポーネ仕立て〜,,580,,assets/img/menu/9cfb46_1a8bed7f8dbf44ad9687017cc22275e6.jpg,
+TRUE,tsubakitei,dinner-menu,ドリンク,,530,アルコール,"・サッポロ生ビール
+・樽生スパークリングワイン
+・グラスワイン 赤/白
+・Deward’s (ウイスキー)
+・Deward’s ハイボール/コーク/ジンジャーエール
+・サッポロ焼酎
+・レモンサワー
+・グレープフルーツサワー",,,,
+TRUE,tsubakitei,dinner-menu,ドリンク,,540,リキュール,"・カシス
+・カンパリ
+・ウォッカ
+・ラム
+・ウイスキー",,,,
+TRUE,tsubakitei,course-menu,コース料理,"-6名様以上からご利用可能な「お得な飲み放題付きコース」がございます。
+-季節やお客様リクエストにより内容の変更が有ります。
+-その他、ご不明点、ご要望については直接お電話にてお問い合わせください。",550,平日コース,"(税込6,490円～)
+※飲み放題は1000円分のお得なコース。
+(飲み放題を付けない場合は5490円から承りますが、その場合お一人様１ドリンク制とさせていただいております。)",,,assets/img/menu/9cfb46_7a92dd37b1044be7aaaccb1e77bb11da.jpg,
+TRUE,tsubakitei,course-menu,コース料理,"-6名様以上からご利用可能な「お得な飲み放題付きコース」がございます。
+-季節やお客様リクエストにより内容の変更が有ります。
+-その他、ご不明点、ご要望については直接お電話にてお問い合わせください。",560,土日・祝日コース,"(税込7,490円～)
+※飲み放題は1000円分のお得なコース。
+(飲み放題を付けない場合は6490円から承りますが、その場合お一人様１ドリンク制とさせていただいております。)",,,assets/img/menu/9cfb46_8ec565c4f994405f9572ca933c596f64.jpg,
+TRUE,tsubakitei,course-menu,ドリンク,"その他、下記記載の混合によるカクテルなども含まれます。
+例）カシスオレンジ・グレープフルーツサワー・レモンサワー",570,アルコール,"・サッポロ生ビール
+・樽生スパークリングワイン
+・グラスワイン 赤/白
+・Deward’s (ウイスキー)
+・Deward’s ハイボール/コーク/ジンジャーエール
+・サッポロ焼酎
+・レモンサワー
+・グレープフルーツサワー",,,,
+TRUE,tsubakitei,course-menu,ドリンク,"その他、下記記載の混合によるカクテルなども含まれます。
+例）カシスオレンジ・グレープフルーツサワー・レモンサワー",580,リキュール,"・カシス
+・カンパリ
+・ウォッカ
+・ラム
+・ウイスキー",,,,
+TRUE,tsubakitei,course-menu,ドリンク,"その他、下記記載の混合によるカクテルなども含まれます。
+例）カシスオレンジ・グレープフルーツサワー・レモンサワー",590,ソフトドリンク,"・オレンジジュース
+・アップルジュース
+・グレープフルーツジュース
+・アイス/ホットコーヒー
+・ジンジャーエール
+・コーラ
+・トマトジュース
+・ウーロン茶
+・ジャスミン茶
+・そば茶",,,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,10,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,20,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,30,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,40,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,50,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,60,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,70,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,80,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,90,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,100,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,110,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,120,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,130,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,140,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,150,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,160,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,170,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,180,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,190,coming soon...,,,￥...,,
+TRUE,deli,deli,ツバキ&デリ メニュー,,200,coming soon...,,,￥...,,

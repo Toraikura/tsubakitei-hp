@@ -43,7 +43,7 @@ a { color: var(--red); text-decoration: none; }
   border-bottom: 3px solid var(--red);
 }
 .header-inner {
-  max-width: var(--maxw);
+  width: 100%;
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
@@ -62,21 +62,6 @@ a { color: var(--red); text-decoration: none; }
   white-space: nowrap;
 }
 .brand img { width: 44px; height: 44px; }
-
-.home-link {
-  color: var(--ink);
-  font-weight: 900;
-  font-size: .9rem;
-  white-space: nowrap;
-  padding: 6px 10px;
-  border: 2px solid var(--red);
-  border-radius: 999px;
-  background: var(--white);
-}
-.home-link:hover {
-  background: var(--red);
-  color: var(--white);
-}
 
 .site-nav ul {
   display: flex;
@@ -112,7 +97,6 @@ a { color: var(--red); text-decoration: none; }
 
 @media (max-width: 860px) {
   .nav-toggle { display: block; }
-  .home-link { font-size: .82rem; padding: 5px 8px; }
   .site-nav {
     display: none;
     position: absolute;

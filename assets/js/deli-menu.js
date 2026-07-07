@@ -2,7 +2,9 @@
  * microCMS未接続時は data/deli-menu.json の20枠を表示する。
  */
 (function () {
-  var LOCAL_DATA_URL = "../data/deli-menu.json";
+  var scriptSrc = (document.currentScript && document.currentScript.getAttribute("src")) || "";
+  var basePath = scriptSrc.replace(/assets\/js\/deli-menu\.js(?:\?.*)?$/, "");
+  var LOCAL_DATA_URL = basePath + "data/deli-menu.json";
   var CMS_CONFIG = window.TSUBAKITEI_DELI_MENU_CMS || {};
   var bodyEl = document.getElementById("deli-menu-body");
 
@@ -19,7 +21,7 @@
   function imageSrc(src) {
     if (!src) return "";
     if (/^(https?:)?\/\//.test(src) || src.charAt(0) === "/") return src;
-    return "../" + src;
+    return basePath + src;
   }
 
   function getImageUrl(image) {

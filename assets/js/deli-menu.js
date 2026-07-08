@@ -61,7 +61,7 @@
   function normalizeItems(data) {
     var rows = data.contents || data.items || [];
     return rows.filter(function (row) {
-      return row.visible !== false && normalizeStore(row.storeSelect || row.store) === "deli";
+      return row.visible !== false && normalizeStore(row.storeSingle || row.storeSelect || row.store) === "deli";
     }).sort(sortByOrder).map(function (row) {
       return {
         name: row.name || "coming soon...",

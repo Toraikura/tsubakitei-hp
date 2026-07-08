@@ -119,9 +119,9 @@
     });
 
     (data.contents || []).filter(function (row) {
-      return row.visible !== false && normalizeStore(row.storeSelect || row.store) === "tsubakitei";
+      return row.visible !== false && normalizeStore(row.storeSingle || row.storeSelect || row.store) === "tsubakitei";
     }).sort(sortByOrder).forEach(function (row) {
-      var menuId = normalizeMenuId(row.menuIdSelect || row.menuId || row.menu);
+      var menuId = normalizeMenuId(row.menuIdSingle || row.menuIdSelect || row.menuId || row.menu);
       var menu = menusById[menuId] || (menusById[menuId] = {
         id: menuId,
         name: row.menuLabel || LABELS[menuId] || menuId,
@@ -130,7 +130,7 @@
       });
       if (!menu.description && row.menuDescription) menu.description = row.menuDescription;
 
-      var sectionName = selectedValue(row.sectionNameSelect) || row.sectionName || "その他";
+      var sectionName = selectedValue(row.sectionNameSingle) || selectedValue(row.sectionNameSelect) || row.sectionName || "その他";
       var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
       if (!section) {
         section = { name: sectionName, description: row.sectionDescription || "", items: [] };

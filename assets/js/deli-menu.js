@@ -46,7 +46,12 @@
     return (numberOrNull(a.sortOrder) || 0) - (numberOrNull(b.sortOrder) || 0);
   }
 
+  function selectedValue(value) {
+    return Array.isArray(value) ? value[0] : value;
+  }
+
   function normalizeStore(value) {
+    value = selectedValue(value);
     var v = String(value || "").trim();
     if (v === "deli" || v === "Deli" || v === "デリ" || v === "ツバキ&デリ") return "deli";
     if (v === "tsubakitei" || v === "ツバキ亭" || v === "洋食ツバキ亭" || v === "本店") return "tsubakitei";

@@ -72,7 +72,12 @@
     });
   }
 
+  function selectedValue(value) {
+    return Array.isArray(value) ? value[0] : value;
+  }
+
   function normalizeMenuId(value) {
+    value = selectedValue(value);
     var v = String(value || "").trim();
     if (v === "Lunch" || v === "lunch") return "menu";
     if (v === "ランチ" || v === "ランチメニュー" || v === "Lunch Menu") return "menu";
@@ -84,6 +89,7 @@
   }
 
   function normalizeStore(value) {
+    value = selectedValue(value);
     var v = String(value || "").trim();
     if (v === "tsubakitei" || v === "ツバキ亭" || v === "洋食ツバキ亭" || v === "本店") return "tsubakitei";
     if (v === "deli" || v === "Deli" || v === "デリ" || v === "ツバキ&デリ") return "deli";
@@ -124,7 +130,7 @@
       });
       if (!menu.description && row.menuDescription) menu.description = row.menuDescription;
 
-      var sectionName = row.sectionNameSelect || row.sectionName || "その他";
+      var sectionName = selectedValue(row.sectionNameSelect) || row.sectionName || "その他";
       var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
       if (!section) {
         section = { name: sectionName, description: row.sectionDescription || "", items: [] };

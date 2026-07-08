@@ -19,8 +19,6 @@
 
 html { scroll-behavior: smooth; }
 
-#deli-menu, #deli-access { scroll-margin-top: 92px; }
-
 body {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
   background: var(--cream);

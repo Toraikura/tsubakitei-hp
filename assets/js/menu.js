@@ -75,9 +75,19 @@
   function normalizeMenuId(value) {
     var v = String(value || "").trim();
     if (v === "Lunch" || v === "lunch") return "menu";
+    if (v === "ランチ" || v === "ランチメニュー" || v === "Lunch Menu") return "menu";
     if (v === "Dinner" || v === "dinner") return "dinner-menu";
+    if (v === "ディナー" || v === "ディナーメニュー" || v === "Dinner Menu") return "dinner-menu";
     if (v === "Course" || v === "course") return "course-menu";
+    if (v === "コース" || v === "コースメニュー" || v === "Course Menu") return "course-menu";
     return v || "menu";
+  }
+
+  function normalizeStore(value) {
+    var v = String(value || "").trim();
+    if (v === "tsubakitei" || v === "ツバキ亭" || v === "洋食ツバキ亭" || v === "本店") return "tsubakitei";
+    if (v === "deli" || v === "Deli" || v === "デリ" || v === "ツバキ&デリ") return "deli";
+    return "";
   }
 
   function getImageUrl(image) {
@@ -103,9 +113,9 @@
     });
 
     (data.contents || []).filter(function (row) {
-      return row.visible !== false && (!row.store || row.store === "tsubakitei");
+      return row.visible !== false && normalizeStore(row.storeSelect || row.store) === "tsubakitei";
     }).sort(sortByOrder).forEach(function (row) {
-      var menuId = normalizeMenuId(row.menuId || row.menu);
+      var menuId = normalizeMenuId(row.menuIdSelect || row.menuId || row.menu);
       var menu = menusById[menuId] || (menusById[menuId] = {
         id: menuId,
         name: row.menuLabel || LABELS[menuId] || menuId,
@@ -114,7 +124,7 @@
       });
       if (!menu.description && row.menuDescription) menu.description = row.menuDescription;
 
-      var sectionName = row.sectionName || "その他";
+      var sectionName = row.sectionNameSelect || row.sectionName || "その他";
       var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
       if (!section) {
         section = { name: sectionName, description: row.sectionDescription || "", items: [] };

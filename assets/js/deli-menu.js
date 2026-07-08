@@ -46,10 +46,17 @@
     return (numberOrNull(a.sortOrder) || 0) - (numberOrNull(b.sortOrder) || 0);
   }
 
+  function normalizeStore(value) {
+    var v = String(value || "").trim();
+    if (v === "deli" || v === "Deli" || v === "デリ" || v === "ツバキ&デリ") return "deli";
+    if (v === "tsubakitei" || v === "ツバキ亭" || v === "洋食ツバキ亭" || v === "本店") return "tsubakitei";
+    return "";
+  }
+
   function normalizeItems(data) {
     var rows = data.contents || data.items || [];
     return rows.filter(function (row) {
-      return row.visible !== false && (!row.store || row.store === "deli");
+      return row.visible !== false && normalizeStore(row.storeSelect || row.store) === "deli";
     }).sort(sortByOrder).map(function (row) {
       return {
         name: row.name || "coming soon...",

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /deli/
+Allow: /
+
+Sitemap: https://tsubakitei.tokyo/sitemap.xml

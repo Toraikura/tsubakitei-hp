@@ -43,7 +43,25 @@ let sortOrder = 10;
 
 for (const menu of source.menus || []) {
   for (const section of menu.sections || []) {
-    for (const item of section.items || []) {
+    const items = section.items || [];
+    if (!items.length && (section.name || section.description)) {
+      rows.push({
+        visible: "TRUE",
+        store: source.store || "tsubakitei",
+        menuId: menu.id,
+        sectionName: section.name || "",
+        sectionDescription: section.description || "",
+        sortOrder,
+        name: "",
+        description: "",
+        price: "",
+        priceText: "",
+        imagePath: "",
+        image: ""
+      });
+      sortOrder += 10;
+    }
+    for (const item of items) {
       rows.push({
         visible: "TRUE",
         store: source.store || "tsubakitei",

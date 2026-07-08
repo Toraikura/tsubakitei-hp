@@ -122,14 +122,19 @@
       }
       if (!section.description && row.sectionDescription) section.description = row.sectionDescription;
 
-      section.items.push({
-        name: row.name || "",
-        description: row.description || "",
-        price: numberOrNull(row.price),
-        priceText: row.priceText || "",
-        image: getImageUrl(row.image) || row.imagePath || "",
-        sortOrder: row.sortOrder
-      });
+      var image = getImageUrl(row.image) || row.imagePath || "";
+      var price = numberOrNull(row.price);
+      var hasItem = !!(row.name || row.description || price || row.priceText || image);
+      if (hasItem) {
+        section.items.push({
+          name: row.name || "",
+          description: row.description || "",
+          price: price,
+          priceText: row.priceText || "",
+          image: image,
+          sortOrder: row.sortOrder
+        });
+      }
     });
 
     return {

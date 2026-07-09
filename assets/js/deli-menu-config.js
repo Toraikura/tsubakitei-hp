@@ -5,7 +5,8 @@
 window.TSUBAKITEI_DELI_MENU_CMS = {
   enabled: true,
   serviceDomain: "tsubakitei-hp",
-  endpoint: "menus",
+  endpoint: "deli-menus",
+  fallbackEndpoint: "menus",
   apiKey: "brnmMHIWz08CI25Z3AhCLywFSROA8AbKdsfq",
   queries: "limit=100&orders=sortOrder"
 };

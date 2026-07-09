@@ -5,6 +5,8 @@ const root = process.cwd();
 const sourcePath = path.join(root, "data", "menu.json");
 const deliSourcePath = path.join(root, "data", "deli-menu.json");
 const outputPath = path.join(root, "data", "microcms-menu-import.csv");
+const tsubakiteiOutputPath = path.join(root, "data", "microcms-tsubakitei-menus-import.csv");
+const deliOutputPath = path.join(root, "data", "microcms-deli-menus-import.csv");
 
 const source = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const deliSource = JSON.parse(fs.readFileSync(deliSourcePath, "utf8"));
@@ -23,6 +25,25 @@ const headers = [
   "imagePath",
   "image"
 ];
+const tsubakiteiHeaders = [
+  "visible",
+  "sortOrder",
+  "menuId",
+  "sectionName",
+  "name",
+  "sectionDescription",
+  "priceText",
+  "image",
+  "imagePath"
+];
+const deliHeaders = [
+  "visible",
+  "sortOrder",
+  "name",
+  "priceText",
+  "image",
+  "imagePath"
+];
 
 function csvCell(value) {
   if (value === null || value === undefined) return "";
@@ -38,14 +59,29 @@ function variantText(item) {
     .join(" / ");
 }
 
+function priceText(item) {
+  const variant = variantText(item);
+  if (variant) return variant;
+  if (item.price && Number(item.price) > 0) return `￥${Number(item.price).toLocaleString("ja-JP")}`;
+  return item.priceText || "";
+}
+
+function menuIdLabel(menuId) {
+  if (menuId === "dinner-menu") return "Dinner";
+  if (menuId === "course-menu") return "Course";
+  return "Lunch";
+}
+
 const rows = [];
+const tsubakiteiRows = [];
+const deliRows = [];
 let sortOrder = 10;
 
 for (const menu of source.menus || []) {
   for (const section of menu.sections || []) {
     const items = section.items || [];
     if (!items.length && (section.name || section.description)) {
-      rows.push({
+      const row = {
         visible: "TRUE",
         store: source.store || "tsubakitei",
         menuId: menu.id,
@@ -58,11 +94,23 @@ for (const menu of source.menus || []) {
         priceText: "",
         imagePath: "",
         image: ""
+      };
+      rows.push(row);
+      tsubakiteiRows.push({
+        visible: row.visible,
+        sortOrder: row.sortOrder,
+        menuId: menuIdLabel(row.menuId),
+        sectionName: row.sectionName,
+        name: row.name,
+        sectionDescription: row.sectionDescription,
+        priceText: row.priceText,
+        image: row.image,
+        imagePath: row.imagePath
       });
       sortOrder += 10;
     }
     for (const item of items) {
-      rows.push({
+      const row = {
         visible: "TRUE",
         store: source.store || "tsubakitei",
         menuId: menu.id,
@@ -72,9 +120,21 @@ for (const menu of source.menus || []) {
         name: item.name || "",
         description: item.description || "",
         price: item.price || "",
-        priceText: variantText(item),
+        priceText: priceText(item),
         imagePath: item.image || "",
         image: ""
+      };
+      rows.push(row);
+      tsubakiteiRows.push({
+        visible: row.visible,
+        sortOrder: row.sortOrder,
+        menuId: menuIdLabel(row.menuId),
+        sectionName: row.sectionName,
+        name: row.name,
+        sectionDescription: [row.sectionDescription, row.description].filter(Boolean).join("\n"),
+        priceText: row.priceText,
+        image: row.image,
+        imagePath: row.imagePath
       });
       sortOrder += 10;
     }
@@ -82,7 +142,7 @@ for (const menu of source.menus || []) {
 }
 
 for (const item of deliSource.items || []) {
-  rows.push({
+  const row = {
     visible: item.visible === false ? "FALSE" : "TRUE",
     store: deliSource.store || "deli",
     menuId: "deli",
@@ -95,14 +155,33 @@ for (const item of deliSource.items || []) {
     priceText: item.priceText || "￥...",
     imagePath: item.imagePath || "",
     image: ""
+  };
+  rows.push(row);
+  deliRows.push({
+    visible: row.visible,
+    sortOrder: row.sortOrder,
+    name: row.name,
+    priceText: row.priceText,
+    image: row.image,
+    imagePath: row.imagePath
   });
   sortOrder += 10;
 }
 
-const csv = [
-  headers.join(","),
-  ...rows.map((row) => headers.map((header) => csvCell(row[header])).join(","))
-].join("\n") + "\n";
+function buildCsv(csvHeaders, csvRows) {
+  return [
+    csvHeaders.join(","),
+    ...csvRows.map((row) => csvHeaders.map((header) => csvCell(row[header])).join(","))
+  ].join("\n") + "\n";
+}
+
+const csv = buildCsv(headers, rows);
+const tsubakiteiCsv = buildCsv(tsubakiteiHeaders, tsubakiteiRows);
+const deliCsv = buildCsv(deliHeaders, deliRows);
 
 fs.writeFileSync(outputPath, csv, "utf8");
+fs.writeFileSync(tsubakiteiOutputPath, tsubakiteiCsv, "utf8");
+fs.writeFileSync(deliOutputPath, deliCsv, "utf8");
 console.log(`Wrote ${rows.length} rows to ${outputPath}`);
+console.log(`Wrote ${tsubakiteiRows.length} rows to ${tsubakiteiOutputPath}`);
+console.log(`Wrote ${deliRows.length} rows to ${deliOutputPath}`);

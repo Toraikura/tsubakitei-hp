@@ -1,110 +1,103 @@
 # microCMS Hobby メニュー更新設計
 
-目的: microCMS Hobby 0円枠のまま、店主がスマホからメニューの金額と写真を変更できるようにする。
+目的: microCMS Hobby 0円枠のまま、店主がスマホからメニューの金額・写真・表示状態を変更できるようにする。
 
 ## コスト方針
 
 - GitHub Pages: 0円
 - microCMS Hobby: 0円/月
 - Wix: ドメイン契約のみ維持
-- microCMS Teamには上げない前提。必要になった場合は店側の月額保守費に含めるか、機能をHobby内に戻す。
+- microCMS Teamには上げない
 
-## microCMS API
+## API構成
 
-API名: `メニュー`
+| 店舗 | API名 | エンドポイント | 用途 |
+|---|---|---|---|
+| 洋食ツバキ亭 | ツバキ亭メニュー | `tsubakitei-menus` | Lunch / Dinner / Course |
+| ツバキ&デリ | デリメニュー | `deli-menus` | デリ商品20枠 |
+| 3号店 | 3号店メニュー | `store3-menus` | 将来用。現在は空 |
 
-エンドポイント: `menus`
+旧`menus` APIは移行確認まで残し、サイト側の一時fallbackにだけ使う。2店舗分の表示確認後に削除する。
 
-形式: リスト形式
+## ツバキ亭のフィールド
 
-API数を節約するため、ランチ/ディナー/コースを分けずに `menus` 1本で管理する。
+| 表示名 | フィールドID | 種類 | 選択肢 |
+|---|---|---|---|
+| 表示する | `visible` | 真偽値 | - |
+| メニュー区分 | `menuId` | セレクト（単一） | Lunch / Dinner / Course |
+| セクション名 | `sectionName` | セレクト（単一） | ランチメニュー / 単品 / ソフトドリンク / アルコール / ディナーメニュー / デザートメニュー / ドリンク / コース料理 / メニュー例 |
+| 品名 | `name` | テキスト | - |
+| セクション説明 | `sectionDescription` | テキストエリア | - |
+| 金額表示 | `priceText` | テキスト | - |
+| 写真 | `image` | 画像 | - |
+| 既存写真パス | `imagePath` | テキスト | - |
+| 並び順 | `sortOrder` | 数字 | 10刻み |
 
-ツバキ亭本店とツバキ&デリを同じ `menus` APIで管理し、`store` で出し分ける。
+## デリのフィールド
 
-## フィールド
+| 表示名 | フィールドID | 種類 |
+|---|---|---|
+| 表示する | `visible` | 真偽値 |
+| 品名 | `name` | テキスト |
+| 金額表示 | `priceText` | テキスト |
+| 写真 | `image` | 画像 |
+| 既存写真パス | `imagePath` | テキスト |
+| 並び順 | `sortOrder` | 数字 |
 
-| 表示名 | フィールドID | 種類 | 店主が触る | 用途 |
-|---|---|---|---|---|
-| 表示する | `visible` | 真偽値 | ○ | 一時的に非表示にする |
-| 店舗 | `store` | テキスト | - | `tsubakitei` 固定 |
-| メニュー区分 | `menuId` | セレクト | - | `menu` / `dinner-menu` / `course-menu` / `deli` |
-| セクション名 | `sectionName` | テキスト | - | ランチメニュー、単品など |
-| セクション説明 | `sectionDescription` | テキストエリア | - | 注意書き |
-| 並び順 | `sortOrder` | 数字 | - | 表示順 |
-| 品名 | `name` | テキスト | △ | 基本は触らない |
-| 説明 | `description` | テキストエリア | △ | 補足文 |
-| 金額 | `price` | 数字 | ○ | 単一価格の税込金額 |
-| 金額表示 | `priceText` | テキスト | ○ | S/L価格など。入力時は `price` より優先 |
-| 既存写真パス | `imagePath` | テキスト | - | 初回移行用のローカル画像パス |
-| 写真 | `image` | 画像 | ○ | 店主が差し替えるメニュー写真 |
+店主が普段触るのは`表示する`、`品名`、`金額表示`、`写真`だけ。`既存写真パス`と`並び順`は初期設定用。
 
-店主向けには `金額`、`金額表示`、`写真`、`表示する` だけを案内する。`sortOrder` や `menuId` は初期設定後に触らない。
+## 入力ルール
 
-`image` が入っている場合は `image` を優先表示する。`image` が空の場合は `imagePath` の既存画像を表示する。
-
-ツバキ&デリは `store: deli` の20枠を先に作っておく。不要な枠は `表示する` をOFFにするだけで非表示にできる。
-
-## 金額入力ルール
-
-- 単一価格: `price` に `1200` のように数字だけ入力する
-- S/Lなど複数価格: `priceText` に `S ￥650 / L ￥750` のように表示したい文字を入れる
-- `priceText` が入っている場合は、サイトでは `priceText` を優先表示する
+- 金額は`￥1,200`のように`金額表示`へ表示したい文字をそのまま入力する
+- S/L価格は`S ￥650 / L ￥750`のように入力する
+- `写真`がある場合は`既存写真パス`より優先表示する
+- 並び順は10、20、30の順。小さい数字が上
+- 一時的に隠す場合は`表示する`をOFFにする
 
 ## サイト側設定
 
-`assets/js/menu-config.js` の値を入れる。
+ツバキ亭は`assets/js/menu-config.js`、デリは`assets/js/deli-menu-config.js`で別エンドポイントを指定する。
 
 ```js
 window.TSUBAKITEI_MENU_CMS = {
   enabled: true,
-  serviceDomain: "サービスID",
-  endpoint: "menus",
+  serviceDomain: "tsubakitei-hp",
+  endpoint: "tsubakitei-menus",
   apiKey: "GET専用APIキー",
   queries: "limit=100&orders=sortOrder"
 };
 ```
 
-注意: `apiKey` はGET権限だけにする。WRITE権限付きキーはブラウザに置かない。また、個別権限で `menus` エンドポイントだけ読めるキーにする。
+```js
+window.TSUBAKITEI_DELI_MENU_CMS = {
+  enabled: true,
+  serviceDomain: "tsubakitei-hp",
+  endpoint: "deli-menus",
+  apiKey: "GET専用APIキー",
+  queries: "limit=100&orders=sortOrder"
+};
+```
+
+APIキーは必ずGET専用にする。ブラウザへ置くキーにPOST、PUT、PATCH、DELETEを付けない。
+
+## 初回投入
+
+1. `node scripts/build-microcms-menu-import.mjs`を実行
+2. `data/microcms-tsubakitei-menus-import.csv`を`tsubakitei-menus`へ投入
+3. `data/microcms-deli-menus-import.csv`を`deli-menus`へ投入
+4. ツバキ亭60件、デリ20件、3号店0件であることを確認
+5. APIキーをGET専用に戻す
+6. PC・スマホでツバキ亭とデリの表示を確認
+
+画像フィールドへCSVで直接入れられるのはmicroCMS配信URLだけ。既存画像は`imagePath`へ入れ、今後の差し替え時に`写真`へアップロードする。
 
 ## fallback
 
-microCMSが未設定、または取得に失敗した場合は `data/menu.json` を読む。これにより本番中にCMS側で一時障害があっても、既存メニュー表示は維持される。
+新API取得に失敗した場合は、移行中のみ旧`menus` APIを読む。旧API削除後は`fallbackEndpoint`を削除し、最終fallbackとしてローカルJSONを使う。
 
-## 初回移行手順
+## セキュリティ
 
-1. microCMS Hobbyでサービスを作成
-2. リスト形式API `menus` を作成
-3. 上記フィールドを作成
-4. `node scripts/build-microcms-menu-import.mjs` で `data/microcms-menu-import.csv` を生成
-5. `menus` APIの「インポートする」からCSVを読み込む
-6. GET専用APIキーを作成。個別権限で `menus` のGETだけ許可する
-7. `assets/js/menu-config.js` に接続情報を入力し、`enabled: true` にする
-8. ローカルとGitHub Pagesでメニュー表示を確認
-
-## CSVインポート時の注意
-
-microCMSのCSVインポートでは、画像フィールドに入れられるのはmicroCMSで配信されている画像URLのみ。既存のローカル画像は `imagePath` に入れておき、店主が写真を差し替える時に `image` フィールドへアップロードする。
-
-`data/microcms-menu-import.csv` には本店59品目 + ツバキ&デリ20枠が入る。
-
-## 店主への説明文
-
-「メニューの金額や写真を変える時は、microCMSのメニュー画面を開いて、該当する品目の `金額` または `金額表示` と `写真` だけ変更してください。保存するとホームページのPC表示・スマホ表示の両方に反映されます。」
-
-## APIキーローテーション（必須・DNS切替前に実施）
-
-現在 `assets/js/menu-config.js` と `assets/js/deli-menu-config.js` に入っているAPIキー（`brnmMHIWz0...`）は、初回投入時に一時的にPOST権限を持たせた実績があり、かつpublicリポジトリに平文でpush済み（GitHub上で誰でも閲覧可能）。GETのみに戻した状態でも、このキー自体は「漏洩済み」として扱い、新しいキーに差し替える。
-
-### 手順（YOSHI側の作業・所要2〜3分）
-
-1. microCMS管理画面 → 該当サービス（`tsubakitei-hp`）→ 「サービス設定」→「APIキー」を開く
-2. 新規APIキーを発行する
-   - 権限: **GETのみ**
-   - 個別権限で **`menus` エンドポイントだけ許可**（他APIを作った場合に備え、必ずスコープを絞る）
-3. 発行した新キーを、以下2ファイルの `apiKey` に貼る
-   - `assets/js/menu-config.js`
-   - `assets/js/deli-menu-config.js`
-4. 変更をコミット・push（Claude Codeに「新しいAPIキーに差し替えて」と伝えればOK。キー文字列自体はチャットに貼らず、YOSHIがローカルでファイルに直接貼り付ける運用でも可）
-5. 新キーでサイトのメニュー表示が正常なことを確認
-6. microCMS管理画面で、旧キー（POST権限を持ったことがあるもの）を**削除**
-7. 初期設定完了後、つばき亭さん側でmicroCMSのログインパスワードを変更（Yoshi側が普段ログインする必要はなくなる）
+- 公開サイトで使うAPIキーはGETのみ
+- HobbyはAPIキーが1本のため、新2 APIへGET可能な状態で運用する
+- 初期投入時に一時的な書込権限を付けた場合、投入直後に必ず解除する
+- APIキーを変更した場合は両configを同時に差し替える

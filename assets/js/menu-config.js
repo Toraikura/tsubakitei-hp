@@ -5,7 +5,8 @@
 window.TSUBAKITEI_MENU_CMS = {
   enabled: true,
   serviceDomain: "tsubakitei-hp",
-  endpoint: "menus",
+  endpoint: "tsubakitei-menus",
+  fallbackEndpoint: "menus",
   apiKey: "brnmMHIWz08CI25Z3AhCLywFSROA8AbKdsfq",
   queries: "limit=100&orders=sortOrder"
 };

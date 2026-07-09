@@ -119,7 +119,8 @@
     });
 
     (data.contents || []).filter(function (row) {
-      return row.visible !== false && normalizeStore(row.storeSingle || row.storeSelect || row.store) === "tsubakitei";
+      var store = row.storeSingle || row.storeSelect || row.store;
+      return row.visible !== false && (!store || normalizeStore(store) === "tsubakitei");
     }).sort(sortByOrder).forEach(function (row) {
       var menuId = normalizeMenuId(row.menuIdSingle || row.menuIdSelect || row.menuId || row.menu);
       var menu = menusById[menuId] || (menusById[menuId] = {
@@ -160,8 +161,12 @@
   }
 
   function microCmsUrl() {
+    return microCmsUrlFor(CMS_CONFIG.endpoint);
+  }
+
+  function microCmsUrlFor(endpoint) {
     var queries = CMS_CONFIG.queries || "limit=100&orders=sortOrder";
-    return "https://" + CMS_CONFIG.serviceDomain + ".microcms.io/api/v1/" + CMS_CONFIG.endpoint + "?" + queries;
+    return "https://" + CMS_CONFIG.serviceDomain + ".microcms.io/api/v1/" + endpoint + "?" + queries;
   }
 
   function loadMenuData() {
@@ -169,6 +174,13 @@
       return fetchJson(microCmsUrl(), {
         cache: "no-cache",
         headers: { "X-MICROCMS-API-KEY": CMS_CONFIG.apiKey }
+      }).catch(function (e) {
+        if (!CMS_CONFIG.fallbackEndpoint) throw e;
+        console.warn("microCMS split menu load failed. Fallback to legacy endpoint.", e);
+        return fetchJson(microCmsUrlFor(CMS_CONFIG.fallbackEndpoint), {
+          cache: "no-cache",
+          headers: { "X-MICROCMS-API-KEY": CMS_CONFIG.apiKey }
+        });
       }).then(microCmsToMenus).catch(function (e) {
         console.warn("microCMS menu load failed. Fallback to local JSON.", e);
         return fetchJson(LOCAL_DATA_URL, { cache: "no-cache" });

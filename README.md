@@ -33,7 +33,8 @@ docs/             設計書
 - メニュー変更は `data/menu.json` を編集。microCMS移行後は店主がスマホで価格・写真を編集
 - microCMS設定は `assets/js/menu-config.js`。手順は `docs/microcms-menu-hobby-setup.md`
 - microCMS初回投入CSV生成: `node scripts/build-microcms-menu-import.mjs`
-- ツバキ&デリのメニュー枠は `data/deli-menu.json` に20件用意。microCMSでは `store: deli` + `表示する` で出し分け
+- 生成先: `data/microcms-tsubakitei-menus-import.csv`（60件） / `data/microcms-deli-menus-import.csv`（20件）
+- microCMSは`tsubakitei-menus`と`deli-menus`に分割。デリの不要な枠は`表示する`をOFFにする
 - ローカル確認: `python3 -m http.server 8000` → http://localhost:8000
 
 ## ドメイン切替（未実施）

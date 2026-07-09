@@ -131,7 +131,7 @@
       });
       if (!menu.description && row.menuDescription) menu.description = row.menuDescription;
 
-      var sectionName = selectedValue(row.sectionNameSingle) || selectedValue(row.sectionNameSelect) || row.sectionName || "その他";
+      var sectionName = selectedValue(row.sectionNameSingle) || selectedValue(row.sectionNameSelect) || selectedValue(row.sectionName) || "その他";
       var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
       if (!section) {
         section = { name: sectionName, description: row.sectionDescription || "", items: [] };

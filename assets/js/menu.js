@@ -112,6 +112,29 @@
     return (numberOrNull(a.sortOrder) || 0) - (numberOrNull(b.sortOrder) || 0);
   }
 
+  function splitCourseDrinkDescription(sectionDescription, itemDescription) {
+    if (!sectionDescription || itemDescription) {
+      return {
+        sectionDescription: sectionDescription || "",
+        itemDescription: itemDescription || ""
+      };
+    }
+    var lines = String(sectionDescription).split(/\r?\n/);
+    var firstItemLine = lines.findIndex(function (line) {
+      return String(line).trim().indexOf("・") === 0;
+    });
+    if (firstItemLine < 0) {
+      return {
+        sectionDescription: sectionDescription,
+        itemDescription: ""
+      };
+    }
+    return {
+      sectionDescription: lines.slice(0, firstItemLine).join("\n").trim(),
+      itemDescription: lines.slice(firstItemLine).join("\n").trim()
+    };
+  }
+
   function microCmsToMenus(data) {
     var menusById = {};
     MENU_ORDER.forEach(function (id) {
@@ -140,6 +163,11 @@
           itemDescription = sectionDescription.slice(priceDescriptionIndex).trim();
           sectionDescription = sectionDescription.slice(0, priceDescriptionIndex).trim();
         }
+      }
+      if (menuId === "course-menu" && sectionName === "ドリンク") {
+        var drinkDescriptions = splitCourseDrinkDescription(sectionDescription, itemDescription);
+        sectionDescription = drinkDescriptions.sectionDescription;
+        itemDescription = drinkDescriptions.itemDescription;
       }
       var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
       if (!section) {

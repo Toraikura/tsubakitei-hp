@@ -90,18 +90,28 @@
     return "https://" + CMS_CONFIG.serviceDomain + ".microcms.io/api/v1/" + endpoint + "?" + queries;
   }
 
+  function fetchLegacyMenu() {
+    return fetchJson(microCmsUrlFor(CMS_CONFIG.fallbackEndpoint), {
+      cache: "no-cache",
+      headers: { "X-MICROCMS-API-KEY": CMS_CONFIG.apiKey }
+    });
+  }
+
   function loadData() {
     if (CMS_CONFIG.enabled && CMS_CONFIG.serviceDomain && CMS_CONFIG.endpoint && CMS_CONFIG.apiKey) {
       return fetchJson(microCmsUrl(), {
         cache: "no-cache",
         headers: { "X-MICROCMS-API-KEY": CMS_CONFIG.apiKey }
+      }).then(function (data) {
+        if (CMS_CONFIG.fallbackEndpoint && (!data.contents || !data.contents.length)) {
+          console.warn("microCMS split deli menu is empty. Fallback to legacy endpoint.");
+          return fetchLegacyMenu();
+        }
+        return data;
       }).catch(function (e) {
         if (!CMS_CONFIG.fallbackEndpoint) throw e;
         console.warn("microCMS split deli menu load failed. Fallback to legacy endpoint.", e);
-        return fetchJson(microCmsUrlFor(CMS_CONFIG.fallbackEndpoint), {
-          cache: "no-cache",
-          headers: { "X-MICROCMS-API-KEY": CMS_CONFIG.apiKey }
-        });
+        return fetchLegacyMenu();
       }).catch(function (e) {
         console.warn("microCMS deli menu load failed. Fallback to local JSON.", e);
         return fetchJson(LOCAL_DATA_URL, { cache: "no-cache" });

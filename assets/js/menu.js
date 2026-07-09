@@ -132,12 +132,21 @@
       if (!menu.description && row.menuDescription) menu.description = row.menuDescription;
 
       var sectionName = selectedValue(row.sectionNameSingle) || selectedValue(row.sectionNameSelect) || selectedValue(row.sectionName) || "その他";
+      var sectionDescription = row.sectionDescription || "";
+      var itemDescription = row.description || "";
+      if (menuId === "course-menu" && sectionName === "コース料理" && !itemDescription) {
+        var priceDescriptionIndex = sectionDescription.indexOf("(税込");
+        if (priceDescriptionIndex >= 0) {
+          itemDescription = sectionDescription.slice(priceDescriptionIndex).trim();
+          sectionDescription = sectionDescription.slice(0, priceDescriptionIndex).trim();
+        }
+      }
       var section = menu.sections.filter(function (sec) { return sec.name === sectionName; })[0];
       if (!section) {
-        section = { name: sectionName, description: row.sectionDescription || "", items: [] };
+        section = { name: sectionName, description: sectionDescription, items: [] };
         menu.sections.push(section);
       }
-      if (!section.description && row.sectionDescription) section.description = row.sectionDescription;
+      if (!section.description && sectionDescription) section.description = sectionDescription;
 
       var image = getImageUrl(row.image) || row.imagePath || "";
       var price = numberOrNull(row.price);
@@ -145,7 +154,7 @@
       if (hasItem) {
         section.items.push({
           name: row.name || "",
-          description: row.description || "",
+          description: itemDescription,
           price: price,
           priceText: row.priceText || "",
           image: image,
